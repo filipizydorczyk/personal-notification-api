@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { VlrService } from './vlr.service';
 
-@Controller()
+@Controller('v1/vlr')
 export class VlrController {
-  constructor(private readonly appService: VlrService) {}
+  constructor(private readonly vlrService: VlrService) {}
 
-  @Get()
-  async getHello(): Promise<string> {
-    return this.appService.getHello();
+  @Get('/today')
+  async getTodayMatches(): Promise<Buffer> {
+    const img = await this.vlrService.getTodayMatches();
+    return img;
   }
 }

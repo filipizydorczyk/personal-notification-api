@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { ImageMiddleware } from './image.middleware';
 import { VlrController } from './vlr.controller';
 import { VlrService } from './vlr.service';
 
@@ -7,4 +8,11 @@ import { VlrService } from './vlr.service';
   controllers: [VlrController],
   providers: [VlrService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ImageMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
