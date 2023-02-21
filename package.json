@@ -1,12 +1,13 @@
 {
   "name": "personal-notification-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Personal REST Application to get data from web na provide single point of access to me for stuff I am instrested in.",
   "author": "filip.izydorczyk@protonmail.com",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "build:docker": "docker build -t personal-notification-api .",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
