@@ -1,6 +1,8 @@
 import puppeteer, { Browser } from 'puppeteer';
 import { Injectable } from '@nestjs/common';
 
+const WINDOW_WIDTH = 2560;
+const WINDOW_HEIGHT = 1440;
 const TODAY_MATCHES_SELECTOR =
   '#wrapper > div.col-container > div > div:nth-child(3)';
 const GITHUB_HEATMAP_SELECTOR =
@@ -23,7 +25,15 @@ export class WebService {
     // TODO see if this could be passed with dependency injection
     this.browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        `--window-size=${WINDOW_WIDTH},${WINDOW_HEIGHT}`,
+      ],
+      defaultViewport: {
+        width: WINDOW_WIDTH,
+        height: WINDOW_HEIGHT,
+      },
     });
   }
 
