@@ -1,6 +1,6 @@
 {
   "name": "personal-notification-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Personal REST Application to get data from web na provide single point of access to me for stuff I am instrested in.",
   "author": "filip.izydorczyk@protonmail.com",
   "private": true,

@@ -7,6 +7,7 @@ const TODAY_MATCHES_SELECTOR =
   '#wrapper > div.col-container > div > div:nth-child(3)';
 const GITHUB_HEATMAP_SELECTOR =
   'html body.logged-out.env-production.page-responsive.page-profile div.logged-out.env-production.page-responsive.page-profile div.application-main main div.container-xl.px-3.px-md-4.px-lg-5 div.Layout.Layout--flowRow-until-md.Layout--sidebarPosition-start.Layout--sidebarPosition-flowRow-start div.Layout-main turbo-frame#user-profile-frame div.position-relative div.mt-4.position-relative div.js-yearly-contributions div.position-relative div.border.py-2.graph-before-activity-overview';
+const HTML_VIDEO_SELECTOR = 'video';
 
 @Injectable()
 /**
@@ -73,5 +74,24 @@ export class WebService {
     page.close();
 
     return typeof img === 'string' ? Buffer.from(img, 'base64') : img;
+  }
+
+  /**
+   * Will take shared tiktok link and return url to shared video alone
+   * (so that you can download this video). Should work with every site
+   * that uses native html video player (if desired video is first video on side).
+   *
+   * @param url url to scrape video from
+   * @returns url to which client should be ridirected
+   */
+  async getHtmlVideo(url: URL): Promise<string> {
+    const page = await this.browser.newPage();
+    await page.goto(url.toString());
+    await page.waitForSelector(HTML_VIDEO_SELECTOR);
+
+    const element = await page.$(HTML_VIDEO_SELECTOR);
+    const src = await element.getProperty('src');
+
+    return await src.jsonValue();
   }
 }
